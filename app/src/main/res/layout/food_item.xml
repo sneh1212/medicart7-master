@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="4dp"
     android:layout_marginBottom="8dp"
+    android:layout_margin="@dimen/activity_horizontal_margin"
 
     >
 
@@ -17,6 +18,7 @@
     </RelativeLayout>
 
     <ImageView
+
         android:id="@+id/medicine_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

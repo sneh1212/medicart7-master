@@ -30,5 +30,33 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <!-- Rating Dialogue-->
+
+    <style name="RatingDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+
+        <item name="android:background">@color/overlayWhite</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/RatingDialogButtonStyle</item>
+        <item name="android:textSize">@style/RatingDialogButtonStyle</item>
+    </style>
+
+    <style name="RatingDialogButtonStyle" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+
+        <item name="android:textColor">#FF0000</item>
+        <item name="android:buttonBarPositiveButtonStyle">@dimen/text_size_medium</item>
+
+    </style>
+
+    <style name="RatingDialogFadeAnim" >
+
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+
+    </style>
+
+
+
+
+
+
 
 </resources>

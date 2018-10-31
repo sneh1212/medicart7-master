@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -90,8 +91,11 @@ public class menu extends AppCompatActivity
         //Load Menu
 
           recycler_menu = (RecyclerView)findViewById(R.id.recyler_menu);
-          layoutManager = new LinearLayoutManager(this);
-          recycler_menu.setLayoutManager(layoutManager);
+          recycler_menu.setHasFixedSize(true);
+          //layoutManager = new LinearLayoutManager(this);
+          //recycler_menu.setLayoutManager(layoutManager);
+
+         recycler_menu.setLayoutManager(new GridLayoutManager(this,2));
 
           if (Common.isConnectedToInternet(this))
 

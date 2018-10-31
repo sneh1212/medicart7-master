@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    android:background="#500d15">
+
 
     <include
         layout="@layout/app_bar_menu"
@@ -20,8 +22,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_menu"
-        android:background="@color/colorPrimaryDark"
-        app:itemTextColor="@color/overlayActionBar"
+        android:background="#861623"
+
+        app:itemTextColor="#fff"
         app:itemIconTint="@color/overlayActionBar"
         app:menu="@menu/activity_menu_drawer" />
 
