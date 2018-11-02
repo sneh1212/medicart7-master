@@ -46,7 +46,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.andremion.counterfab.CounterFab
         android:id="@+id/btncart"
         android:elevation="6dp"
         app:pressedTranslationZ="12dp"

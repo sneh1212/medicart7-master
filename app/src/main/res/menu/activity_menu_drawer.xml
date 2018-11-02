@@ -13,15 +13,17 @@
         <item
             android:id="@+id/ayu"
 
-            android:title="Ayush" />
+            android:title="Cart" />
         <item
             android:id="@+id/spot"
 
             android:title="Spotlight" />
         <item
-            android:id="@+id/Fit"
-
-            android:title="Fitness" />
+            android:id="@+id/nav_change_password"
+            android:icon="@drawable/ic_security_black_24dp"
+            android:title="Change Password"
+            android:iconTint="@color/overlayWhite"
+            />
         <item
             android:id="@+id/per"
 

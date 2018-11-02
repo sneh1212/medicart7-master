@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="9"
             android:gravity="center"
+
             android:text="Name of Medicine"
             android:textSize="20sp" />
 
@@ -48,6 +49,15 @@
             android:layout_weight="1"
             android:src="@drawable/ic_favorite_border_black_24dp"
             android:tint="#fff" />
+
+        <ImageView
+            android:id="@+id/btn_Quick_cart"
+            android:src="@drawable/cart"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

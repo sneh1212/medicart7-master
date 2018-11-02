@@ -12,7 +12,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
 
     public TextView food_name;
-    public ImageView food_image,fav_image;
+    public ImageView food_image,fav_image,quick_cart;
 
     private ItemClickListener itemClickListener;
 
@@ -26,6 +26,8 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         food_name = (TextView)itemView.findViewById(R.id.medicine_name);
         food_image = (ImageView)itemView.findViewById(R.id.medicine_image);
         fav_image = (ImageView)itemView.findViewById(R.id.fav);
+        quick_cart=(ImageView)itemView.findViewById(R.id.btn_Quick_cart);
+
 
         itemView.setOnClickListener(this);
     }

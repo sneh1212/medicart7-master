@@ -21,6 +21,7 @@ import com.medikart.otp.Common.Common;
 import com.medikart.otp.Database.Database;
 import com.medikart.otp.Interface.ItemClickListener;
 import com.medikart.otp.Model.Food;
+import com.medikart.otp.Model.Order;
 import com.medikart.otp.ViewHolder.FoodViewHolder;
 import com.squareup.picasso.Picasso;
 
@@ -157,6 +158,24 @@ public class FoodList extends AppCompatActivity {
                 viewHolder.food_name.setText(model.getName());
                 Picasso.with(getBaseContext()).load(model.getImage())
                         .into(viewHolder.food_image);
+
+                //Quick cart
+
+                viewHolder.quick_cart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new Database(getBaseContext()).addToCart(new Order(
+                               adapter.getRef(position).getKey(),
+                                model.getName(),
+                                "1",
+                                model.getPrice(),
+                                model.getDiscount()
+                        ));
+                        Toast.makeText(FoodList.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
 
                 //Add Favorites
                 if (localDB.isFavorites(adapter.getRef(position).getKey()))

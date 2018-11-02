@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
                          }
 
-                     databaseReference.addValueEventListener(new ValueEventListener() {
+                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                          @Override
                          public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -107,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
                                      Common.currentUser = user;
                                      startActivity(intent);
                                      finish();
+                                     databaseReference.removeEventListener(this);
+
+
+
                                  } else {
                                      Toast.makeText(MainActivity.this, "Invalid user", Toast.LENGTH_SHORT).show();
                                  }
