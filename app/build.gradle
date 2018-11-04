@@ -20,6 +20,9 @@ android {
 
 dependencies {
 
+    // google service
+    implementation'com.google.android.gms:play-services-places:11.8.0'
+
     //counterFaB
     implementation 'com.github.andremion:counterfab:1.0.1'
 

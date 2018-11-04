@@ -44,14 +44,17 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-        
-        <ImageView
-            android:id="@+id/Cart_item_count"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginRight="16dp"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
 
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:id="@+id/btn_quantity"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            app:backGroundColor="#FF0000"
+            app:initialNumber="1"
+            app:finalNumber="20"
+
+            />
     </LinearLayout>
 
 
