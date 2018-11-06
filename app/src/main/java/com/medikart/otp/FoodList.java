@@ -151,7 +151,7 @@ public class FoodList extends AppCompatActivity {
                 Food.class,
                 R.layout.food_item,
                 FoodViewHolder.class,
-                foodList.orderByChild("Name").equalTo(text.toString()) // compare name
+                foodList.orderByChild("name").equalTo(text.toString()) // compare name
         ) {
             @Override
             protected void populateViewHolder(final FoodViewHolder viewHolder, final Food model, final int position) {
@@ -161,21 +161,40 @@ public class FoodList extends AppCompatActivity {
 
                 //Quick cart
 
-                viewHolder.quick_cart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        new Database(getBaseContext()).addToCart(new Order(
-                               adapter.getRef(position).getKey(),
-                                model.getName(),
-                                "1",
-                                model.getPrice(),
-                                model.getDiscount()
-                        ));
-                        Toast.makeText(FoodList.this, "Added to Cart", Toast.LENGTH_SHORT).show();
 
 
-                    }
-                });
+                    viewHolder.quick_cart.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            boolean isExists = new Database(getBaseContext()).checkFoodExists(adapter.getRef(position).getKey(),Common.currentUser.getPhone());
+
+
+
+
+                            if (!isExists) {
+                                new Database(getBaseContext()).addToCart(new Order(
+                                        Common.currentUser.getPhone(),
+                                        adapter.getRef(position).getKey(),
+                                        model.getName(),
+                                        "1",
+                                        model.getPrice(),
+                                        model.getDiscount(),
+                                        model.getImage()
+                                ));
+
+
+
+                            }
+                            else {
+                                new Database(getBaseContext()).increaseCart(Common.currentUser.getPhone(),adapter.getRef(position).getKey());
+                            }
+                            Toast.makeText(FoodList.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                        }
+
+                    });
+
+
 
                 //Add Favorites
                 if (localDB.isFavorites(adapter.getRef(position).getKey()))
@@ -211,7 +230,7 @@ public class FoodList extends AppCompatActivity {
                         // start new activity
 
                         Intent fooddetail = new Intent(FoodList.this, FoodDetail.class);
-                        fooddetail.putExtra("FoodId", searchAdapter.getRef(position).getKey());// send food id to new activity
+                        fooddetail.putExtra("foodId", searchAdapter.getRef(position).getKey());// send food id to new activity
                         startActivity(fooddetail);
                         return null;
 
@@ -224,7 +243,7 @@ public class FoodList extends AppCompatActivity {
 
     private void loadSuggest() {
 
-        foodList.orderByChild("MenuId").equalTo(CategoryId)
+        foodList.orderByChild("menuId").equalTo(CategoryId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -246,7 +265,7 @@ public class FoodList extends AppCompatActivity {
 
     private void loadListFood(String categoryId) {
                                                                                                                                                     // like: select* from Foods Where MenuId =
-        adapter = new FirebaseRecyclerAdapter<Food, FoodViewHolder>(Food.class,R.layout.food_item,FoodViewHolder.class,foodList.orderByChild("MenuId").equalTo(categoryId)) {
+        adapter = new FirebaseRecyclerAdapter<Food, FoodViewHolder>(Food.class,R.layout.food_item,FoodViewHolder.class,foodList.orderByChild("menuId").equalTo(categoryId)) {
             @Override
             protected void populateViewHolder(FoodViewHolder viewHolder, Food model, int position) {
 
@@ -262,7 +281,7 @@ public class FoodList extends AppCompatActivity {
                         // start new activity
 
                         Intent fooddetail = new Intent(FoodList.this,FoodDetail.class);
-                        fooddetail.putExtra("FoodId",adapter.getRef(position).getKey());// send food id to new activity
+                        fooddetail.putExtra("foodId",adapter.getRef(position).getKey());// send food id to new activity
                         startActivity(fooddetail);
                         return null;
                     }

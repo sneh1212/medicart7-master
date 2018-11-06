@@ -2,7 +2,7 @@ package com.medikart.otp;
 
 public class User {
 
-     private String name,email,password,phone,IsStaff ;
+     private String name,email,password,phone,IsStaff,homeAddress ;
 
     public User(){}
 
@@ -52,5 +52,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }

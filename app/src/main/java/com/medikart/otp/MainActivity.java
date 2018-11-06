@@ -73,69 +73,64 @@ public class MainActivity extends AppCompatActivity {
              @Override
              public void onClick(View view) {
 
-                 if (Common.isConnectedToInternet(getBaseContext())) {
+                     if (Common.isConnectedToInternet(getBaseContext())) {
 
-                     // Rember user coding for save user id And password
+                         // Rember user coding for save user id And password
 
-                         if (ckbRemeber.isChecked())
-                         {
-                             Paper.book().write(Common.USER_KEY,number.getText().toString());
-                             Paper.book().write(Common.PWD_KEY,pass.getText().toString());
+                         if (ckbRemeber.isChecked()) {
+                             Paper.book().write(Common.USER_KEY, number.getText().toString());
+                             Paper.book().write(Common.PWD_KEY, pass.getText().toString());
 
                          }
 
-                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                         @Override
-                         public void onDataChange(DataSnapshot dataSnapshot) {
+                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                             @Override
+                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                             // if data not exists in database
+                                 // if data not exists in database
 
-                             if (dataSnapshot.child(number.getText().toString()).exists()) {
-
-
-                                 // here we taking the user information
-
-                                 User user = dataSnapshot.child(number.getText().toString()).getValue(User.class);
-                                 user.setPhone(number.getText().toString());  // set phone number
+                                 if (dataSnapshot.child(number.getText().toString()).exists()) {
 
 
-                                 if (user.getPassword().equals(pass.getText().toString())) {
-                                     // Toast.makeText(MainActivity.this, "valid user", Toast.LENGTH_SHORT).show();
+                                     // here we taking the user information
 
-                                     Intent intent = new Intent(MainActivity.this, menu.class);
-                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                     Common.currentUser = user;
-                                     startActivity(intent);
-                                     finish();
-                                     databaseReference.removeEventListener(this);
+                                     User user = dataSnapshot.child(number.getText().toString()).getValue(User.class);
+                                     user.setPhone(number.getText().toString());  // set phone number
 
 
+                                     if (user.getPassword().equals(pass.getText().toString())) {
+                                         // Toast.makeText(MainActivity.this, "valid user", Toast.LENGTH_SHORT).show();
 
+                                         Intent intent = new Intent(MainActivity.this, menu.class);
+                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                         Common.currentUser = user;
+                                         startActivity(intent);
+                                         finish();
+                                         databaseReference.removeEventListener(this);
+
+
+                                     } else {
+                                         Toast.makeText(MainActivity.this, "Invalid user", Toast.LENGTH_SHORT).show();
+                                     }
                                  } else {
-                                     Toast.makeText(MainActivity.this, "Invalid user", Toast.LENGTH_SHORT).show();
+                                     Toast.makeText(MainActivity.this, "user not exists", Toast.LENGTH_SHORT).show();
                                  }
-                             } else {
-                                 Toast.makeText(MainActivity.this, "user not exists", Toast.LENGTH_SHORT).show();
+
                              }
 
-                         }
+                             @Override
+                             public void onCancelled(DatabaseError databaseError) {
 
-                         @Override
-                         public void onCancelled(DatabaseError databaseError) {
-
-                         }
-                     });
+                             }
+                         });
 
 
-
+                     } else {
+                         Toast.makeText(MainActivity.this, "No Internet Connection !!", Toast.LENGTH_SHORT).show();
+                         return;
+                     }
                  }
 
-                 else
-                 {
-                     Toast.makeText(MainActivity.this, "No Internet Connection !!", Toast.LENGTH_SHORT).show();
-                     return;
-                 }
-             }
 
          });
 

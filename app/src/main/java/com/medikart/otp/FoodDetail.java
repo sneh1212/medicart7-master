@@ -77,18 +77,20 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
             public void onClick(View v) {
 
                 new Database(getBaseContext()).addToCart(new Order(
+                        Common.currentUser.getPhone(),
                         foodId,
                         currentFood.getName(),
                         numberButton.getNumber(),
                         currentFood.getPrice(),
-                        currentFood.getDiscount()
+                        currentFood.getDiscount(),
+                        currentFood.getImage()
                 ));
                 Toast.makeText(FoodDetail.this, "Added to Cart", Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        btncart.setCount(new Database(this).getCountCart());
+        btncart.setCount(new Database(this).getCountCart(Common.currentUser.getPhone()));
 
         food_description = (TextView)findViewById(R.id.food_description);
         food_name = (TextView)findViewById(R.id.food_name);
@@ -102,7 +104,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         // get food id from intent
 
         if(getIntent()!=null)
-            foodId = getIntent().getStringExtra("FoodId");
+            foodId = getIntent().getStringExtra("foodId");
 
           if(!foodId.isEmpty())
           {

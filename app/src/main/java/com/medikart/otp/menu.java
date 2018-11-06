@@ -87,7 +87,7 @@ public class menu extends AppCompatActivity
             }
         });
 
-        fab.setCount(new Database(this).getCountCart());
+        fab.setCount(new Database(this).getCountCart(Common.currentUser.getPhone()));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -132,11 +132,13 @@ public class menu extends AppCompatActivity
     //ctrl+o
 
 
+
+
     @Override
     protected void onResume() {
 
         super.onResume();
-        fab.setCount(new Database(this).getCountCart());
+        fab.setCount(new Database(this).getCountCart(Common.currentUser.getPhone()));
         //Fix Click back button from food and dont see category
 
     }
@@ -172,6 +174,8 @@ public class menu extends AppCompatActivity
 
         recycler_menu.setAdapter(adapter);
     }
+
+
 
 
     @Override
@@ -246,7 +250,10 @@ public class menu extends AppCompatActivity
 
                 showChangePasswordDailog();
 
-            } else if (id == R.id.home) {
+            } else if (id == R.id.nav_home_address) {
+
+                showHomeAddressDailog();
+
 
             } else if (id == R.id.up) {
 
@@ -256,6 +263,43 @@ public class menu extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showHomeAddressDailog() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(menu.this);
+        alertDialog.setTitle("CHANGE HOME ADDRESS");
+        alertDialog.setMessage("Please fill all information");
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View layout_home = inflater.inflate(R.layout.home_address_layout,null);
+        final MaterialEditText edtHomeAddress = (MaterialEditText)layout_home.findViewById(R.id.edtHomeAddress);
+        alertDialog.setView(layout_home);
+        alertDialog.setPositiveButton("UPDATE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                // Set new  Home Address
+                Common.currentUser.setHomeAddress(edtHomeAddress.getText().toString());
+
+                FirebaseDatabase.getInstance().getReference("Usres")
+                        .child(Common.currentUser.getPhone())
+                        .setValue(Common.currentUser)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                Toast.makeText(menu.this, "Update Address Successful ", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+            }
+        });
+        alertDialog.show();
+
+
     }
 
     private void showChangePasswordDailog() {

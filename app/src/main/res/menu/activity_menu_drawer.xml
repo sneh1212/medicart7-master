@@ -25,9 +25,11 @@
             android:iconTint="@color/overlayWhite"
             />
         <item
-            android:id="@+id/per"
-
-            android:title="Personal Care" />
+            android:id="@+id/nav_home_address"
+            android:title="Home Address"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:iconTint="@color/overlayWhite"
+            />
         <item
             android:id="@+id/fam"
 

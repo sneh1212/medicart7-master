@@ -6,12 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,6 +94,26 @@ public class Cart extends AppCompatActivity {
 
         final MaterialEditText edtAddress = (MaterialEditText)order_address_comment.findViewById(R.id.edtAddress);
         final MaterialEditText edtComment = (MaterialEditText)order_address_comment.findViewById(R.id.edtComment);
+        //final MaterialEditText address = (MaterialEditText)order_address_comment.findViewById(R.id.edtHomeAddress);
+
+
+        final RadioButton rdiHomeAddress =(RadioButton)order_address_comment.findViewById(R.id.rdiHomeAddress);
+
+        //Event Radio
+        rdiHomeAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                {
+                      if (!TextUtils.isEmpty(Common.currentUser.getHomeAddress())
+                              ||Common.currentUser.getHomeAddress()== null)
+                          Toast.makeText(Cart.this, "Please Update Your home Address", Toast.LENGTH_SHORT).show();
+
+                       //address = Common.currentUser.getHomeAddress();
+                }
+            }
+        });
+
 
         aleartDialog.setView(order_address_comment);
 
@@ -117,7 +140,7 @@ public class Cart extends AppCompatActivity {
                 requests.child(String.valueOf(System.currentTimeMillis()))
                         .setValue(request);
                 //Delete cart
-                new Database(getBaseContext()).cleanCart();
+                new Database(getBaseContext()).cleanCart(Common.currentUser.getPhone());
                 Toast.makeText(Cart.this, "Thank you , Order Place", Toast.LENGTH_SHORT).show();
                 finish();
 
@@ -138,7 +161,7 @@ public class Cart extends AppCompatActivity {
 
     private void loadListFood() {
 
-        cart = new Database(this).getCarts();
+        cart = new Database(this).getCarts(Common.currentUser.getPhone());
         adapter = new CartAdapter(cart,this);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
@@ -175,7 +198,7 @@ public class Cart extends AppCompatActivity {
 
         //After that, we will delete all old data from sqlite
 
-        new Database(this).cleanCart();
+        new Database(this).cleanCart(Common.currentUser.getPhone());
 
         // And final , wee will update new data from List<order> to Sqlite
             for (Order item:cart)
